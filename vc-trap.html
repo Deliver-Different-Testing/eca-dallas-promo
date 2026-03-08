@@ -38,6 +38,40 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── Navbar ── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(13,12,44,0.95);
+  backdrop-filter: blur(10px);
+}
+.nav-logo img { height: 56px; }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links .nav-cta {
+  background: var(--cyan);
+  color: var(--primary);
+  font-weight: 700;
+  padding: 0.5rem 1.25rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+}
+.nav-links .nav-cta:hover { background: var(--white); }
+
 /* ── Article Header ── */
 .article-header {
   background: var(--primary);
@@ -451,6 +485,7 @@ body {
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
+  .nav-links { display: none; }
   .article-body { padding: 3rem 1.5rem 4rem; }
   .lifecycle { flex-direction: column; gap: 1rem; }
   .lifecycle::before { display: none; }
@@ -465,6 +500,18 @@ body {
 <body>
 
 <!-- ═══════ HEADER ═══════ -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="img/logo-nav.png" alt="DFRNT — Deliver Different">
+  </a>
+  <div class="nav-links">
+    <a href="index.html">← ECA Showcase</a>
+    <a href="index.html#auto-dispatch">Auto-Dispatch</a>
+    <a href="index.html#automate">Auto-Mate AI</a>
+    <a href="index.html#closing" class="nav-cta">Talk to Us →</a>
+  </div>
+</nav>
+
 <header class="article-header">
   <div class="header-content">
     <div class="header-label">Industry Analysis</div>
