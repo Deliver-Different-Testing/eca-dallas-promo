@@ -23,7 +23,6 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -34,16 +33,54 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── Navbar ── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(13,12,44,0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.nav-logo img { height: 36px; }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links .nav-cta {
+  background: var(--cyan);
+  color: var(--primary);
+  font-weight: 700;
+  padding: 0.5rem 1.25rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+}
+.nav-links .nav-cta:hover { background: var(--white); }
+
 /* ── Hero ── */
 .hero {
   min-height: 100vh;
   background: var(--primary);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
-  text-align: center;
-  padding: 2rem;
+  padding: 6rem 4rem 4rem;
   position: relative;
   overflow: hidden;
 }
@@ -65,23 +102,23 @@ body {
   100% { transform: translate(-3%, 2%); }
 }
 
-.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.hero-text { position: relative; z-index: 1; max-width: 600px; }
 
 .hero-badge {
   display: inline-block;
   border: 1px solid rgba(59,199,244,0.4);
   color: var(--cyan);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   padding: 0.5rem 1.25rem;
   border-radius: 100px;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .hero-number {
-  font-size: clamp(5rem, 15vw, 12rem);
+  font-size: clamp(5rem, 12vw, 9rem);
   font-weight: 900;
   line-height: 0.9;
   background: linear-gradient(135deg, var(--cyan) 0%, #7dd3fc 50%, var(--cyan) 100%);
@@ -100,12 +137,12 @@ body {
 }
 
 .hero-tagline {
-  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
   color: rgba(255,255,255,0.5);
   font-weight: 400;
-  max-width: 600px;
-  margin: 0 auto 3rem;
+  max-width: 520px;
   line-height: 1.6;
+  margin-bottom: 2.5rem;
 }
 
 .hero-cta {
@@ -120,34 +157,30 @@ body {
   border-radius: 100px;
   text-decoration: none;
   transition: all 0.3s ease;
-  letter-spacing: 0.02em;
 }
-
 .hero-cta:hover {
   background: var(--white);
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(59,199,244,0.3);
 }
 
-.scroll-indicator {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
+.hero-visual {
+  position: relative;
   z-index: 1;
-  animation: bounce 2s infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.scroll-indicator svg { width: 24px; height: 24px; stroke: rgba(255,255,255,0.3); }
-
-@keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(8px); }
+.hero-visual img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 60px rgba(59,199,244,0.15));
 }
 
 /* ── Sections ── */
 section { padding: 6rem 2rem; }
-
 .container { max-width: 1100px; margin: 0 auto; }
 
 .section-label {
@@ -172,22 +205,6 @@ section { padding: 6rem 2rem; }
   line-height: 1.7;
   color: var(--grey-600);
   max-width: 700px;
-}
-
-/* ── Manifesto ── */
-.manifesto {
-  background: var(--light);
-}
-
-.manifesto-quote {
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--primary);
-  border-left: 4px solid var(--cyan);
-  padding-left: 1.5rem;
-  margin: 2.5rem 0;
-  max-width: 800px;
 }
 
 /* ── Stats Bar ── */
@@ -221,6 +238,148 @@ section { padding: 6rem 2rem; }
   letter-spacing: 0.1em;
 }
 
+/* ── Manifesto ── */
+.manifesto { background: var(--light); }
+
+.manifesto-quote {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--primary);
+  border-left: 4px solid var(--cyan);
+  padding-left: 1.5rem;
+  margin: 2.5rem 0;
+  max-width: 800px;
+}
+
+/* ── Ecosystem ── */
+.ecosystem-section {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.ecosystem-visual { text-align: center; }
+.ecosystem-visual img {
+  max-width: 100%;
+  max-height: 500px;
+  filter: drop-shadow(0 10px 40px rgba(59,199,244,0.2));
+}
+
+.ecosystem-text .section-text { color: rgba(255,255,255,0.6); }
+
+.app-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.app-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+}
+
+.app-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cyan);
+  flex-shrink: 0;
+}
+
+/* ── Auto-Mate ── */
+.automate-section { background: var(--light); }
+
+.automate-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.automate-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.automate-visual img {
+  max-width: 320px;
+  filter: drop-shadow(0 10px 40px rgba(59,199,244,0.15));
+}
+
+.automate-orbs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.am-feature {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: flex-start;
+}
+
+.am-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(59,199,244,0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.am-feature h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.am-feature p {
+  font-size: 0.9rem;
+  color: var(--grey-600);
+  line-height: 1.5;
+}
+
+.am-levels {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.am-level {
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 2px solid;
+}
+
+.am-level:nth-child(1) { border-color: #d1d5db; color: var(--grey-600); }
+.am-level:nth-child(2) { border-color: var(--cyan); color: var(--cyan-dark); }
+.am-level:nth-child(3) { border-color: #60a5fa; color: #2563eb; }
+.am-level:nth-child(4) { border-color: var(--green); color: #059669; }
+
 /* ── Headcount Grid ── */
 .headcount-grid {
   display: grid;
@@ -248,16 +407,12 @@ section { padding: 6rem 2rem; }
 .hc-card::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
+  top: 0; left: 0; width: 100%; height: 3px;
   background: var(--cyan);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
 }
-
 .hc-card:hover::after { transform: scaleX(1); }
 
 .hc-icon {
@@ -272,39 +427,29 @@ section { padding: 6rem 2rem; }
   margin-bottom: 1rem;
 }
 
-.hc-card h4 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
+.hc-card h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.hc-card .replaces { font-size: 0.85rem; color: var(--grey-600); margin-bottom: 1rem; line-height: 1.5; }
+.hc-savings { font-size: 1.5rem; font-weight: 800; color: var(--cyan); }
+.hc-savings span { font-size: 0.8rem; color: var(--grey-600); font-weight: 500; }
 
-.hc-card .replaces {
-  font-size: 0.85rem;
-  color: var(--grey-600);
-  margin-bottom: 1rem;
-  line-height: 1.5;
-}
-
-.hc-savings {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--cyan);
-}
-
-.hc-savings span {
-  font-size: 0.8rem;
-  color: var(--grey-600);
-  font-weight: 500;
-}
-
-/* ── Auto-Dispatch Feature ── */
-.dispatch-section {
-  background: var(--primary);
-  color: var(--white);
-}
-
+/* ── Auto-Dispatch ── */
+.dispatch-section { background: var(--primary); color: var(--white); }
 .dispatch-section .section-label { color: var(--cyan); }
 .dispatch-section .section-text { color: rgba(255,255,255,0.6); }
+
+.dispatch-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.dispatch-hero img {
+  max-width: 100%;
+  border-radius: 16px;
+  filter: drop-shadow(0 10px 40px rgba(59,199,244,0.2));
+}
 
 .trust-ladder {
   display: flex;
@@ -317,8 +462,7 @@ section { padding: 6rem 2rem; }
   content: '';
   position: absolute;
   top: 50%;
-  left: 0;
-  right: 0;
+  left: 0; right: 0;
   height: 2px;
   background: rgba(59,199,244,0.2);
   z-index: 0;
@@ -345,25 +489,12 @@ section { padding: 6rem 2rem; }
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--cyan);
-  transition: all 0.3s ease;
 }
 
-.trust-step:last-child .trust-dot {
-  background: var(--cyan);
-  color: var(--primary);
-}
+.trust-step:last-child .trust-dot { background: var(--cyan); color: var(--primary); }
 
-.trust-step h5 {
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin-bottom: 0.35rem;
-}
-
-.trust-step p {
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.4);
-  line-height: 1.4;
-}
+.trust-step h5 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.35rem; }
+.trust-step p { font-size: 0.75rem; color: rgba(255,255,255,0.4); line-height: 1.4; }
 
 .dispatch-callout {
   margin-top: 3rem;
@@ -372,13 +503,7 @@ section { padding: 6rem 2rem; }
   border-radius: 16px;
   border: 1px solid rgba(59,199,244,0.15);
 }
-
-.dispatch-callout p {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: rgba(255,255,255,0.8);
-}
-
+.dispatch-callout p { font-size: 1.05rem; line-height: 1.7; color: rgba(255,255,255,0.8); }
 .dispatch-callout strong { color: var(--cyan); }
 
 /* ── Comparison ── */
@@ -399,7 +524,6 @@ section { padding: 6rem 2rem; }
   color: var(--grey-600);
   border-bottom: 2px solid #e5e7eb;
 }
-
 .comparison-table th:nth-child(2) { color: var(--cyan); }
 
 .comparison-table td {
@@ -407,16 +531,13 @@ section { padding: 6rem 2rem; }
   border-bottom: 1px solid #f3f4f6;
   vertical-align: top;
 }
-
 .comparison-table tr:hover td { background: rgba(59,199,244,0.03); }
-
 .comparison-table td:first-child { font-weight: 600; white-space: nowrap; }
 
 .check { color: var(--green); font-weight: 700; }
 .cross { color: var(--red); font-weight: 700; }
 .partial { color: var(--gold); font-weight: 700; }
 
-/* ── CXT Disruption ── */
 .disruption {
   background: #fef3c7;
   border-radius: 16px;
@@ -424,81 +545,39 @@ section { padding: 6rem 2rem; }
   margin-top: 3rem;
   border: 1px solid #fbbf24;
 }
-
-.disruption h4 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #92400e;
-  margin-bottom: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.disruption p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #78350f;
-}
+.disruption h4 { font-size: 1.1rem; font-weight: 700; color: #92400e; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+.disruption p { font-size: 0.95rem; line-height: 1.6; color: #78350f; }
 
 /* ── Origin Story ── */
-.origin {
-  background: var(--light);
-}
+.origin { background: var(--light); }
 
 .timeline {
   margin-top: 3rem;
   position: relative;
   padding-left: 3rem;
 }
-
 .timeline::before {
   content: '';
   position: absolute;
-  left: 11px;
-  top: 0;
-  bottom: 0;
+  left: 11px; top: 0; bottom: 0;
   width: 2px;
   background: linear-gradient(to bottom, var(--cyan), rgba(59,199,244,0.1));
 }
 
-.timeline-item {
-  position: relative;
-  margin-bottom: 2.5rem;
-}
-
+.timeline-item { position: relative; margin-bottom: 2.5rem; }
 .timeline-item::before {
   content: '';
   position: absolute;
-  left: -3rem;
-  top: 0.35rem;
-  width: 12px;
-  height: 12px;
+  left: -3rem; top: 0.35rem;
+  width: 12px; height: 12px;
   border-radius: 50%;
   background: var(--cyan);
   border: 3px solid var(--light);
 }
 
-.timeline-item h4 {
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-
-.timeline-item .year {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--cyan);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.timeline-item p {
-  font-size: 0.9rem;
-  color: var(--grey-600);
-  line-height: 1.5;
-  margin-top: 0.25rem;
-}
+.timeline-item h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem; }
+.timeline-item .year { font-size: 0.75rem; font-weight: 700; color: var(--cyan); text-transform: uppercase; letter-spacing: 0.1em; }
+.timeline-item p { font-size: 0.9rem; color: var(--grey-600); line-height: 1.5; margin-top: 0.25rem; }
 
 /* ── Network ── */
 .network-highlight {
@@ -512,25 +591,9 @@ section { padding: 6rem 2rem; }
   color: var(--white);
 }
 
-.network-number {
-  font-size: clamp(4rem, 8vw, 6rem);
-  font-weight: 900;
-  color: var(--cyan);
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.network-text h4 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.network-text p {
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.6);
-  line-height: 1.6;
-}
+.network-number { font-size: clamp(4rem, 8vw, 6rem); font-weight: 900; color: var(--cyan); line-height: 1; white-space: nowrap; }
+.network-text h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+.network-text p { font-size: 0.95rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
 
 /* ── Pricing ── */
 .pricing-contrast {
@@ -540,127 +603,16 @@ section { padding: 6rem 2rem; }
   margin-top: 3rem;
 }
 
-.pricing-card {
-  border-radius: 16px;
-  padding: 2.5rem;
-}
-
-.pricing-card.old {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-}
-
-.pricing-card.new {
-  background: rgba(59,199,244,0.06);
-  border: 2px solid var(--cyan);
-}
-
-.pricing-card h4 {
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-bottom: 1rem;
-}
-
+.pricing-card { border-radius: 16px; padding: 2.5rem; }
+.pricing-card.old { background: #fef2f2; border: 1px solid #fecaca; }
+.pricing-card.new { background: rgba(59,199,244,0.06); border: 2px solid var(--cyan); }
+.pricing-card h4 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem; }
 .pricing-card.old h4 { color: var(--red); }
 .pricing-card.new h4 { color: var(--cyan); }
-
-.pricing-card p {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--grey-800);
-}
-
-.pricing-card .big {
-  font-size: 1.5rem;
-  font-weight: 800;
-  margin: 1rem 0;
-}
-
+.pricing-card p { font-size: 1rem; line-height: 1.7; color: var(--grey-800); }
+.pricing-card .big { font-size: 1.5rem; font-weight: 800; margin: 1rem 0; }
 .pricing-card.old .big { color: var(--red); }
 .pricing-card.new .big { color: var(--cyan); }
-
-/* ── SaaSpocalypse ── */
-.saas-section { background: var(--light); }
-
-.saas-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2.5rem;
-}
-
-.saas-card {
-  background: var(--white);
-  border-radius: 16px;
-  padding: 2rem;
-  border: 1px solid #e5e7eb;
-}
-
-.saas-card h4 {
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.saas-card p {
-  font-size: 0.9rem;
-  color: var(--grey-600);
-  line-height: 1.6;
-}
-
-.saas-card .highlight-num {
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--red);
-  margin-bottom: 0.5rem;
-}
-
-/* ── Closing ── */
-.closing {
-  background: var(--primary);
-  text-align: center;
-  padding: 8rem 2rem;
-  color: var(--white);
-}
-
-.closing-quote {
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
-  font-weight: 600;
-  max-width: 800px;
-  margin: 0 auto 1.5rem;
-  line-height: 1.4;
-}
-
-.closing-sub {
-  font-size: 1rem;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 3rem;
-}
-
-.closing .hero-cta {
-  font-size: 1rem;
-  padding: 1.1rem 3rem;
-}
-
-/* ── Footer ── */
-footer {
-  background: #080720;
-  padding: 2rem;
-  text-align: center;
-}
-
-.footer-brand {
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.3);
-  letter-spacing: 0.1em;
-}
-
-.footer-brand a {
-  color: var(--cyan);
-  text-decoration: none;
-}
 
 /* ── One-liners ── */
 .oneliners {
@@ -682,61 +634,103 @@ footer {
   font-style: italic;
 }
 
-/* ── Responsive ── */
-@media (max-width: 768px) {
-  section { padding: 4rem 1.5rem; }
+/* ── Closing ── */
+.closing {
+  background: var(--primary);
+  text-align: center;
+  padding: 8rem 2rem;
+  color: var(--white);
+}
 
+.closing-quote { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 600; max-width: 800px; margin: 0 auto 1.5rem; line-height: 1.4; }
+.closing-sub { font-size: 1rem; color: rgba(255,255,255,0.5); margin-bottom: 3rem; }
+.closing .hero-cta { font-size: 1rem; padding: 1.1rem 3rem; }
+
+/* ── Footer ── */
+footer {
+  background: #080720;
+  padding: 2rem;
+  text-align: center;
+}
+.footer-brand { font-size: 0.8rem; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; }
+.footer-brand a { color: var(--cyan); text-decoration: none; }
+
+/* ── VC Article Banner ── */
+.vc-banner {
+  background: linear-gradient(135deg, #1a1940, #0d0c2c);
+  padding: 2rem;
+  text-align: center;
+  border-top: 1px solid rgba(59,199,244,0.1);
+}
+.vc-banner a {
+  color: var(--cyan);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.vc-banner a:hover { color: var(--white); }
+.vc-banner span { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; padding: 6rem 2rem 3rem; text-align: center; }
+  .hero-text { max-width: 100%; }
+  .hero-tagline { margin-left: auto; margin-right: auto; }
+  .hero-visual { margin-top: 2rem; }
+  .hero-visual img { max-height: 40vh; }
+  .nav-links { display: none; }
+  .ecosystem-grid { grid-template-columns: 1fr; }
+  .ecosystem-visual { order: -1; }
+  .automate-grid { grid-template-columns: 1fr; }
+  .automate-visual { order: -1; margin-bottom: 2rem; }
+  .dispatch-hero { grid-template-columns: 1fr; }
   .trust-ladder { flex-direction: column; gap: 1.5rem; }
   .trust-ladder::before { display: none; }
-
   .network-highlight { flex-direction: column; text-align: center; padding: 2rem; }
-
   .pricing-contrast { grid-template-columns: 1fr; }
-
-  .comparison-table { font-size: 0.8rem; }
-  .comparison-table td:first-child { white-space: normal; }
-
   .headcount-grid { grid-template-columns: 1fr; }
+  .app-list { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
+<!-- ═══════ NAVBAR ═══════ -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="nav-logo">
+    <img src="img/logo-white.png" alt="DFRNT — Deliver Different">
+  </a>
+  <div class="nav-links">
+    <a href="#platform">Platform</a>
+    <a href="#automate">Auto-Mate</a>
+    <a href="#headcount">AI Savings</a>
+    <a href="#dispatch">Auto-Dispatch</a>
+    <a href="vc-trap.html">VC Trap</a>
+    <a href="#closing" class="nav-cta">Talk to Us →</a>
+  </div>
+</nav>
+
 <!-- ═══════ HERO ═══════ -->
 <section class="hero">
-  <div class="hero-content">
+  <div class="hero-text">
     <div class="hero-badge">ECA Dallas 2026 — End of April</div>
     <div class="hero-number">35</div>
     <h1 class="hero-subtitle">Years of Intelligence</h1>
     <p class="hero-tagline">Three and a half decades of running real courier operations. Every route. Every dispatch decision. Every 4pm Friday scramble. Now it's the engine behind AI that doesn't assist your team — it replaces the roles your team shouldn't be doing.</p>
     <a href="#headcount" class="hero-cta">See What 35 Years Builds →</a>
   </div>
-  <div class="scroll-indicator">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
-      <path d="M12 5v14M19 12l-7 7-7-7"/>
-    </svg>
+  <div class="hero-visual">
+    <img src="img/hero-hand.png" alt="DFRNT Drive mobile app with atom orbital rings">
   </div>
 </section>
 
 <!-- ═══════ STATS BAR ═══════ -->
 <div class="stats-bar">
   <div class="stats-grid">
-    <div class="stat-item">
-      <h3>35</h3>
-      <p>Years Operating</p>
-    </div>
-    <div class="stat-item">
-      <h3>821+</h3>
-      <p>Carrier Network</p>
-    </div>
-    <div class="stat-item">
-      <h3>$245K+</h3>
-      <p>Headcount Savings / Year</p>
-    </div>
-    <div class="stat-item">
-      <h3>28</h3>
-      <p>Years at US Events</p>
-    </div>
+    <div class="stat-item"><h3>35</h3><p>Years Operating</p></div>
+    <div class="stat-item"><h3>821+</h3><p>Carrier Network</p></div>
+    <div class="stat-item"><h3>$245K+</h3><p>Headcount Savings / Year</p></div>
+    <div class="stat-item"><h3>28</h3><p>Years at US Events</p></div>
   </div>
 </div>
 
@@ -746,10 +740,97 @@ footer {
     <span class="section-label">The Philosophy</span>
     <h2 class="section-title">Innovation Isn't a Feature List</h2>
     <p class="section-text">Ask courier owners what they want and they'll tell you what competitors aren't doing. That's not innovation — that's a checklist. Real innovation eliminates roles, not tasks.</p>
-    <blockquote class="manifesto-quote">
-      "Innovation is taking customers to a place they don't know they need to go — and making it so obvious in hindsight they wonder why they waited."
-    </blockquote>
+    <blockquote class="manifesto-quote">"Innovation is taking customers to a place they don't know they need to go — and making it so obvious in hindsight they wonder why they waited."</blockquote>
     <p class="section-text">Every AI feature DFRNT ships has a headcount number attached to it. If it doesn't eliminate a salary line, it doesn't ship. We don't demo AI. We deploy it.</p>
+  </div>
+</section>
+
+<!-- ═══════ ECOSYSTEM ═══════ -->
+<section class="ecosystem-section" id="platform">
+  <div class="container">
+    <div class="ecosystem-grid">
+      <div class="ecosystem-text">
+        <span class="section-label">The Platform</span>
+        <h2 class="section-title" style="color: var(--white);">One Ecosystem.<br>Every Angle Covered.</h2>
+        <p class="section-text">Not a collection of bolt-ons. A unified platform where every module talks to every other — dispatch, CRM, invoicing, driver apps, client portals, reporting. All connected by the DFRNT atom.</p>
+        <div class="app-list">
+          <div class="app-item"><span class="app-dot"></span> Dispatch</div>
+          <div class="app-item"><span class="app-dot"></span> Client Manager</div>
+          <div class="app-item"><span class="app-dot"></span> Courier Manager</div>
+          <div class="app-item"><span class="app-dot"></span> Accounts</div>
+          <div class="app-item"><span class="app-dot"></span> Admin Manager</div>
+          <div class="app-item"><span class="app-dot"></span> DFRNT Drive (Mobile)</div>
+          <div class="app-item"><span class="app-dot"></span> Route Builder</div>
+          <div class="app-item"><span class="app-dot"></span> Tracker</div>
+          <div class="app-item"><span class="app-dot"></span> Booking Page</div>
+          <div class="app-item"><span class="app-dot"></span> Integration Hub</div>
+          <div class="app-item"><span class="app-dot"></span> Courier Portal</div>
+          <div class="app-item"><span class="app-dot"></span> Bulk Import</div>
+        </div>
+      </div>
+      <div class="ecosystem-visual">
+        <img src="img/ecosystem.png" alt="DFRNT ecosystem — mobile app surrounded by orbiting module icons">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ AUTO-MATE ═══════ -->
+<section class="automate-section" id="automate">
+  <div class="container">
+    <div class="automate-grid">
+      <div class="automate-visual">
+        <img src="img/mobile-atom.png" alt="Auto-Mate — DFRNT's AI assistant embedded in the mobile app">
+      </div>
+      <div>
+        <span class="section-label">Meet Auto-Mate</span>
+        <h2 class="section-title">Your AI Operations Partner</h2>
+        <p class="section-text" style="margin-bottom: 2rem;">Auto-Mate is the intelligence layer that lives across every DFRNT app. Not a chatbot. Not a sidebar suggestion engine. A genuine AI partner that learns your operation and progressively takes over the tasks your team shouldn't be doing.</p>
+
+        <div class="am-feature">
+          <div class="am-icon">📧</div>
+          <div>
+            <h4>Email Parser</h4>
+            <p>Reads inbound email, classifies intent, extracts booking details from PDFs, and creates jobs — without a human touching the inbox.</p>
+          </div>
+        </div>
+
+        <div class="am-feature">
+          <div class="am-icon">🧠</div>
+          <div>
+            <h4>Auto-Dispatch</h4>
+            <p>Scores every available courier against 7 weighted criteria. Makes the call. Logs the reasoning. Full decision audit trail.</p>
+          </div>
+        </div>
+
+        <div class="am-feature">
+          <div class="am-icon">💬</div>
+          <div>
+            <h4>Smart Chat</h4>
+            <p>Handles customer queries — tracking, ETAs, pricing — with full context from the live operation. No canned responses.</p>
+          </div>
+        </div>
+
+        <div class="am-feature">
+          <div class="am-icon">📄</div>
+          <div>
+            <h4>Scan-to-Fill</h4>
+            <p>Upload a document — license, insurance cert, invoice — and Auto-Mate extracts every field. AI fills the form. You verify.</p>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <p style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--grey-600); margin-bottom: 0.75rem;">Automation Levels</p>
+          <div class="am-levels">
+            <span class="am-level">👁 Shadow</span>
+            <span class="am-level">💡 Suggest</span>
+            <span class="am-level">🤝 Assist</span>
+            <span class="am-level">⚡ Auto</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--grey-600); margin-top: 0.75rem; line-height: 1.5;">Start with Auto-Mate watching. Graduate to full autonomous operation — at your pace, with complete transparency at every level.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -802,38 +883,18 @@ footer {
 </section>
 
 <!-- ═══════ AUTO-DISPATCH ═══════ -->
-<section class="dispatch-section">
+<section class="dispatch-section" id="dispatch">
   <div class="container">
     <span class="section-label">The Crown Jewel</span>
     <h2 class="section-title" style="color: var(--white);">Auto-Dispatch Isn't a Copilot.<br>It <em>Is</em> the Dispatcher.</h2>
     <p class="section-text">You don't trust AI on day one. Neither do we. That's why we built the trust ladder — see every decision the AI <em>would</em> have made before it touches a single job.</p>
 
     <div class="trust-ladder">
-      <div class="trust-step">
-        <div class="trust-dot">1</div>
-        <h5>Shadow</h5>
-        <p>AI watches. You see what it would do. Zero risk.</p>
-      </div>
-      <div class="trust-step">
-        <div class="trust-dot">2</div>
-        <h5>Suggest</h5>
-        <p>AI recommends. You pick from ranked options.</p>
-      </div>
-      <div class="trust-step">
-        <div class="trust-dot">3</div>
-        <h5>Confirm</h5>
-        <p>AI decides. You approve with one click.</p>
-      </div>
-      <div class="trust-step">
-        <div class="trust-dot">4</div>
-        <h5>Auto</h5>
-        <p>AI dispatches. You review exceptions only.</p>
-      </div>
-      <div class="trust-step">
-        <div class="trust-dot">5</div>
-        <h5>Full Auto</h5>
-        <p>AI runs dispatch. Complete decision audit trail.</p>
-      </div>
+      <div class="trust-step"><div class="trust-dot">1</div><h5>Shadow</h5><p>AI watches. You see what it would do. Zero risk.</p></div>
+      <div class="trust-step"><div class="trust-dot">2</div><h5>Suggest</h5><p>AI recommends. You pick from ranked options.</p></div>
+      <div class="trust-step"><div class="trust-dot">3</div><h5>Confirm</h5><p>AI decides. You approve with one click.</p></div>
+      <div class="trust-step"><div class="trust-dot">4</div><h5>Auto</h5><p>AI dispatches. You review exceptions only.</p></div>
+      <div class="trust-step"><div class="trust-dot">5</div><h5>Full Auto</h5><p>AI runs dispatch. Complete decision audit trail.</p></div>
     </div>
 
     <div class="dispatch-callout">
@@ -848,33 +909,12 @@ footer {
     <span class="section-label">The Origin</span>
     <h2 class="section-title">Built From Inside the Operation</h2>
     <p class="section-text">We're the courier company that built software, not the software company that studied couriers. That distinction matters more than any feature comparison.</p>
-
     <div class="timeline">
-      <div class="timeline-item">
-        <span class="year">1991</span>
-        <h4>Urgent Couriers Founded</h4>
-        <p>Started with real trucks, real drivers, real problems. Every feature that exists today was born from operational necessity.</p>
-      </div>
-      <div class="timeline-item">
-        <span class="year">1998</span>
-        <h4>First US Industry Events</h4>
-        <p>28 years and counting in the ECA/CLDA world. Not a newcomer. Not a tourist. Not a pitch deck.</p>
-      </div>
-      <div class="timeline-item">
-        <span class="year">2010s</span>
-        <h4>Software Takes Shape</h4>
-        <p>Dispatch, CRM, invoicing, driver apps — all built because we needed them, not because a focus group suggested them. Our devs sit next to dispatchers.</p>
-      </div>
-      <div class="timeline-item">
-        <span class="year">2024</span>
-        <h4>DFRNT — Deliver Different</h4>
-        <p>35 years of operational intelligence packaged as a multi-tenant platform. Per-tenant database isolation. Transaction-based pricing. Built for the AI era.</p>
-      </div>
-      <div class="timeline-item">
-        <span class="year">2026</span>
-        <h4>AI That Replaces, Not Assists</h4>
-        <p>Auto-Dispatch. Email Parser. Smart Quoting. Every feature has a headcount number. $180–245K+ in annual savings per customer.</p>
-      </div>
+      <div class="timeline-item"><span class="year">1991</span><h4>Urgent Couriers Founded</h4><p>Started with real trucks, real drivers, real problems. Every feature that exists today was born from operational necessity.</p></div>
+      <div class="timeline-item"><span class="year">1998</span><h4>First US Industry Events</h4><p>28 years and counting in the ECA/CLDA world. Not a newcomer. Not a tourist. Not a pitch deck.</p></div>
+      <div class="timeline-item"><span class="year">2010s</span><h4>Software Takes Shape</h4><p>Dispatch, CRM, invoicing, driver apps — all built because we needed them. Our devs sit next to dispatchers. Our bugs get found by drivers.</p></div>
+      <div class="timeline-item"><span class="year">2024</span><h4>DFRNT — Deliver Different</h4><p>35 years of operational intelligence packaged as a multi-tenant platform. Per-tenant DB isolation. Transaction-based pricing. Built for the AI era.</p></div>
+      <div class="timeline-item"><span class="year">2026</span><h4>Auto-Mate Goes Live</h4><p>AI that replaces, not assists. Auto-Dispatch. Email Parser. Smart Quoting. Scan-to-Fill. Every feature has a headcount number. $180–245K+ in annual savings per customer.</p></div>
     </div>
   </div>
 </section>
@@ -885,7 +925,6 @@ footer {
     <span class="section-label">The Network Advantage</span>
     <h2 class="section-title">Try Covering a Job Outside Your Zone at 4pm Friday</h2>
     <p class="section-text">We've done it thousands of times. That's why Agents & Partners exists — and why nobody else has it.</p>
-
     <div class="network-highlight">
       <div class="network-number">821+</div>
       <div class="network-text">
@@ -903,70 +942,22 @@ footer {
     <h2 class="section-title">The Reality Check</h2>
     <div style="overflow-x: auto;">
     <table class="comparison-table">
-      <thead>
-        <tr>
-          <th>Capability</th>
-          <th>DFRNT</th>
-          <th>Others</th>
-          <th>What It Means</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Capability</th><th>DFRNT</th><th>Others</th><th>What It Means</th></tr></thead>
       <tbody>
-        <tr>
-          <td>AI Dispatch</td>
-          <td><span class="check">Autonomous</span> — 5 modes, decision audit</td>
-          <td><span class="partial">Copilot</span> — suggestions only</td>
-          <td>A copilot still needs a pilot</td>
-        </tr>
-        <tr>
-          <td>Email / AI Triage</td>
-          <td><span class="check">Full pipeline</span> — parse, classify, route, respond</td>
-          <td><span class="cross">None</span></td>
-          <td>We eliminate the inbox role</td>
-        </tr>
-        <tr>
-          <td>Carrier Network</td>
-          <td><span class="check">821+ carriers</span></td>
-          <td><span class="cross">None</span></td>
-          <td>Dealbreaker for multi-market</td>
-        </tr>
-        <tr>
-          <td>Automation Engine</td>
-          <td><span class="check">Dedicated</span> — rules, triggers, workflows</td>
-          <td><span class="cross">None</span></td>
-          <td>AI for judgment. Rules for process.</td>
-        </tr>
-        <tr>
-          <td>Multi-Tenant</td>
-          <td><span class="check">Per-tenant DB isolation</span></td>
-          <td><span class="partial">Unknown architecture</span></td>
-          <td>Your data. Your database. Period.</td>
-        </tr>
-        <tr>
-          <td>Pricing Model</td>
-          <td><span class="check">Per delivery</span></td>
-          <td><span class="partial">Likely per-seat</span></td>
-          <td>Per-seat is what AI disrupts</td>
-        </tr>
-        <tr>
-          <td>Funding</td>
-          <td><span class="check">Revenue-funded</span></td>
-          <td><span class="partial">VC seed round</span></td>
-          <td>No runway. No board. No flame-out risk.</td>
-        </tr>
-        <tr>
-          <td>Production Track Record</td>
-          <td><span class="check">35 years live</span></td>
-          <td><span class="partial">~3 years, ~6 customers</span></td>
-          <td>We run on our own software. Every day.</td>
-        </tr>
+        <tr><td>AI Dispatch</td><td><span class="check">Autonomous</span> — 5 modes, decision audit</td><td><span class="partial">Copilot</span> — suggestions only</td><td>A copilot still needs a pilot</td></tr>
+        <tr><td>Email / AI Triage</td><td><span class="check">Full pipeline</span> — parse, classify, route, respond</td><td><span class="cross">None</span></td><td>We eliminate the inbox role</td></tr>
+        <tr><td>AI Assistant</td><td><span class="check">Auto-Mate</span> — across every module</td><td><span class="partial">Chat widget</span></td><td>Ours learns the operation. Theirs reads FAQs.</td></tr>
+        <tr><td>Carrier Network</td><td><span class="check">821+ carriers</span></td><td><span class="cross">None</span></td><td>Dealbreaker for multi-market</td></tr>
+        <tr><td>Automation Engine</td><td><span class="check">Dedicated</span> — rules, triggers, workflows</td><td><span class="cross">None</span></td><td>AI for judgment. Rules for process.</td></tr>
+        <tr><td>Multi-Tenant</td><td><span class="check">Per-tenant DB isolation</span></td><td><span class="partial">Unknown architecture</span></td><td>Your data. Your database. Period.</td></tr>
+        <tr><td>Pricing Model</td><td><span class="check">Per delivery</span></td><td><span class="partial">Likely per-seat</span></td><td>Per-seat is what AI disrupts</td></tr>
+        <tr><td>Funding</td><td><span class="check">Revenue-funded</span></td><td><span class="partial">VC seed round</span></td><td>No runway. No board. No flame-out risk.</td></tr>
       </tbody>
     </table>
     </div>
-
     <div class="disruption">
       <h4>⚠️ CXT / e-Courier Customers: Your Platform Is in Maintenance Mode</h4>
-      <p>Same parent company. Ground-up rebuild announced. Estimated 2 years — which means 3+. No new AI features, no innovation, just bug fixes. Your competitors will have Auto-Dispatch saving them $60K/shift while you're waiting for a login screen. And when it does launch, you get to migrate again. How many times do you want to move your data?</p>
+      <p>Same parent company. Ground-up rebuild announced. Estimated 2 years — which means 3+. No new AI features, no innovation, just bug fixes. Your competitors will have Auto-Dispatch saving them $60K/shift while you're waiting for a login screen.</p>
     </div>
   </div>
 </section>
@@ -977,55 +968,26 @@ footer {
     <span class="section-label">The Model</span>
     <h2 class="section-title">Per-Seat Is the Model AI Is Disrupting</h2>
     <p class="section-text">If your software charges per user and your AI eliminates users — something doesn't add up.</p>
-
     <div class="pricing-contrast">
       <div class="pricing-card old">
         <h4>The Old Model</h4>
-        <p>Per-seat licensing. More users = more cost. AI "helps" your team but you still pay for every seat. The vendor's incentive is more users, not fewer.</p>
+        <p>Per-seat licensing. More users = more cost. AI "helps" your team but you still pay for every seat.</p>
         <div class="big">AI reduces headcount.<br>Per-seat punishes you for it.</div>
       </div>
       <div class="pricing-card new">
         <h4>The DFRNT Model</h4>
-        <p>Transaction-based pricing. Per delivery. Your AI savings stay in your pocket. As AI eliminates roles, your cost stays flat — or drops. Our incentive: more volume, not more logins.</p>
+        <p>Transaction-based pricing. Per delivery. Your AI savings stay in your pocket. As Auto-Mate eliminates roles, your cost stays flat — or drops.</p>
         <div class="big">Your AI savings are yours.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════ SAASPOCALYPSE ═══════ -->
-<section class="saas-section">
-  <div class="container">
-    <span class="section-label">The Landscape</span>
-    <h2 class="section-title">The SaaSpocalypse Is Real</h2>
-    <p class="section-text">$1 trillion wiped from SaaS stocks. VC-backed companies face existential funding risk. The question isn't who has the best demo — it's who'll still be here in 5 years.</p>
-
-    <div class="saas-cards">
-      <div class="saas-card">
-        <div class="highlight-num">$1T</div>
-        <h4>Wiped From SaaS Stocks</h4>
-        <p>The market is punishing SaaS models. Per-seat pricing, VC dependency, no path to profitability. The reckoning is here.</p>
-      </div>
-      <div class="saas-card">
-        <div class="highlight-num" style="color: var(--gold);">$3.8M</div>
-        <h4>Seed Round + SF Burn Rate</h4>
-        <p>When does the next round come? What if it doesn't? Remember Pallet — VC money, great marketing, very little product. Sold to Tenet. Fire sale, not triumph.</p>
-      </div>
-      <div class="saas-card">
-        <div class="highlight-num" style="color: var(--green);">35 yrs</div>
-        <h4>Revenue-Funded Operations</h4>
-        <p>DFRNT is backed by Urgent Couriers — real money from a real business. No runway anxiety. No board to answer to. No flame-out risk.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ═══════ ONE-LINERS ═══════ -->
-<section>
+<section style="background: var(--light);">
   <div class="container">
     <span class="section-label">The Sound Bites</span>
     <h2 class="section-title">For Hallway Conversations</h2>
-
     <div class="oneliners">
       <div class="oneliner">"AI will get you in. Our AI will make you WIN."</div>
       <div class="oneliner">"A copilot still needs a pilot. Auto-Dispatch doesn't."</div>
@@ -1033,36 +995,36 @@ footer {
       <div class="oneliner">"We don't demo AI. We deploy it."</div>
       <div class="oneliner">"Our dispatcher is software. How much does yours cost?"</div>
       <div class="oneliner">"821 carriers in the network. Show me anyone else with that."</div>
-      <div class="oneliner">"Per-seat pricing is what AI disrupts. We charge per delivery."</div>
-      <div class="oneliner">"Everyone's showing you AI that answers questions. We're building AI that eliminates the question."</div>
+      <div class="oneliner">"Meet Auto-Mate — the only AI that runs on 35 years of real dispatch data."</div>
+      <div class="oneliner">"Everyone's showing you AI that answers questions. We built AI that eliminates the question."</div>
     </div>
   </div>
 </section>
 
 <!-- ═══════ ONBOARDING ═══════ -->
-<section style="background: var(--light);">
+<section>
   <div class="container">
     <span class="section-label">Getting Started</span>
     <h2 class="section-title">AI Will Get You In</h2>
-    <p class="section-text">12-month commitment. Zero onboarding fee. AI-powered setup does 80% automatically. Import your data from any competitor TMS. New customers live in days, not weeks.</p>
-
-    <div style="margin-top: 2rem; padding: 2rem; background: var(--white); border-radius: 16px; border: 1px solid #e5e7eb;">
-      <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Smart Migration — From Any Platform</h4>
-      <p style="font-size: 0.95rem; color: var(--grey-600); line-height: 1.7;">
-        Export your data from CXT, Key Software, Datatrac, Crown, e-Courier — or any CSV. Our AI import engine auto-detects your format, maps your fields, validates your data, and flags issues before anything goes live. Your data. Your export. Clean migration. No vendor lock-in drama.
-      </p>
-    </div>
+    <p class="section-text">12-month commitment. Zero onboarding fee. Auto-Mate powered setup does 80% automatically. Import your data from any competitor TMS. New customers live in days, not weeks.</p>
   </div>
 </section>
 
 <!-- ═══════ CLOSING ═══════ -->
-<section class="closing">
+<section class="closing" id="closing">
   <div class="container">
+    <img src="img/logo-white.png" alt="DFRNT" style="height: 48px; margin-bottom: 2rem; opacity: 0.8;">
     <p class="closing-quote">"I'm not asking you to believe a pitch deck. I'm asking you to look at a platform that runs a real courier company, every day, and decide if that's what your operation deserves."</p>
     <p class="closing-sub">The AI isn't coming. The AI is here. The only question is whether your AI will be a feature on someone's demo — or a line item off your P&L.</p>
     <a href="https://deliverdifferent.com" class="hero-cta">Talk to Us at ECA Dallas →</a>
   </div>
 </section>
+
+<!-- ═══════ VC BANNER ═══════ -->
+<div class="vc-banner">
+  <span>📖 Read our analysis: </span>
+  <a href="vc-trap.html">The VC Trap — Why Your Next TMS Vendor Might Not Survive →</a>
+</div>
 
 <!-- ═══════ FOOTER ═══════ -->
 <footer>
@@ -1070,6 +1032,14 @@ footer {
     <a href="https://deliverdifferent.com">DFRNT</a> — Deliver Different &nbsp;|&nbsp; 35 Years of Intelligence &nbsp;|&nbsp; ECA Dallas 2026
   </p>
 </footer>
+
+<script>
+// Navbar scroll effect
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+</script>
 
 </body>
 </html>
